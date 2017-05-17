@@ -6,6 +6,7 @@ import {Route, IndexRoute} from 'react-router';
 import App from './components/app';
 import HomePage from './components/home/HomePage';
 import AboutPage from './components/about/AboutPage';
+import CoursesPage from './components/cources/CoursesPage';
 
 export default (
   //Wrap all the components with Route Component. We reference our App component
@@ -14,6 +15,7 @@ export default (
   //based on our routing.
   <Route path="/" component={App}>
     <IndexRoute component={HomePage}/>
+    <Route path="courses" component={CoursesPage}/>
     <Route path="about" component={AboutPage}/>
   </Route>
 );

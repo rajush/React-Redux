@@ -12,7 +12,7 @@ class App extends React.Component {
       //getting our About page component right here because it will
       //be passed in as a child by React router.
       <div className="container-fluid">
-        <Header></Header>
+        <Header/>
         {this.props.children}
       </div>
     );

@@ -6,12 +6,32 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Router, browserHistory} from 'react-router';
 
+//To make our app's entry point to work with Redux.
+import configureStore from './store/configureStore';
+//Provider is is a higher-order component that attaches our store to our React container components.
+import {Provider} from 'react-redux';
+
 import routes from './routes';
 import './styles/styles.css'; //Webpack can import CSS files too! It will end up bundling these files.
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
-//Application's entry point. Here we pass in our routes component.
+
+/**
+ * create an instance of our store. We are not passing any initial state here because
+ * Currently, our reducer already sets its initial state using an ES6 default parameter.
+ * (If we pass initial state here, we'd be overriding the default parameters that we specify in our reducers.)
+ */
+const store = configureStore();
+
+/**
+ * Application's entry point. Here we pass in our routes component.
+ * Wrap our Router component with the Provider component, that takes one prop, which is the store.
+ * Provider component is wrapping our entire application so that it can be connected to our Redux store. And because our
+ * application is wrapped in the Provider component, we'll be able to access our Redux store in our components.
+ */
 render(
-  <Router history={browserHistory} routes={routes}/>,
+  <Provider store={store}>
+    <Router history={browserHistory} routes={routes}/>
+  </Provider>,
   document.getElementById('app')
 );

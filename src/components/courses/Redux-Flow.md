@@ -1,6 +1,6 @@
-#Step-through Redux flow
+<h1>Step-through Redux flow</h1>
 
-<h5> DISPATCH --> ACTION --> REDUCER --> mapStateToProps --> RENDER</h5>
+<h4> DISPATCH --> ACTION --> REDUCER --> mapStateToProps --> RENDER</h4>
 
 Our CoursesPage is now connected to the Redux store, and the list of courses is available on **this.props.courses** because 
 we set up the **mapStateToProps** function down below. Now, let's update the **render** function so that it displays the 
@@ -33,7 +33,7 @@ And now what we want to do is---of course, our render function's going to get ca
 we are going to hit 'Save', and we'll be walking through the flow of Redux: 
 
 1) The first thing that we see here is we're landing in the _**action creator**_. So there's our action creator getting 
-called and getting passed this course with a title of **t**. 
+called and getting passed this course with a title of _string_ value _**(eg: t)**_ that was typed. 
 
 2) Hit F8 to continue. And now we're landing over here in the **_courseReducer_**. We can see that _state_ 
 right now is _empty_. There're no courses in state because this was initialized to an _empty array_, and the action in 

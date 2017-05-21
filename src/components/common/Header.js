@@ -1,6 +1,13 @@
 import React, {PropTypes} from 'react';
 import {Link, IndexLink} from 'react-router';
 
+/**
+ * This is stateless functional component, with just an arrow function here and have a body inside.
+ * We are using the IndexLink component from React Router to handle this IndexLink, which just has a slash in it.
+ * And we're also using a nice little feature that comes along with both Link and IndexLink to say when this link is active
+ * based on the route, go ahead and apply a class for us. So this allows us to style the currently selected anchor up
+ * in the header.
+ */
 const Header = () => {
   return (
     <nav>

@@ -8,9 +8,11 @@ import Header from './common/Header';
 class App extends React.Component {
   render() {
     return (
-      //When we go to /about in routes.js, then App.js will end up
-      //getting our About page component right here because it will
-      //be passed in as a child by React router.
+      /**
+       * When we go to /about in routes.js, then App.js will end up
+       * getting our About page component right here because it will
+       * be passed in as a child by React router.
+       */
       <div className="container-fluid">
         <Header/>
         {this.props.children}

@@ -26,7 +26,8 @@ class CoursesPage extends React.Component {
   }
 
   onClickSave() {
-    this.props.dispatch(courseActions.createCourse(this.state.course));
+    //Just pass in the 'course' as it's already wrapped in dispatch for us down in the 'mapDispatchToProps' function.
+    this.props.createCourse(this.state.course);
   }
 
   courseRow(course, index) {
@@ -54,8 +55,8 @@ class CoursesPage extends React.Component {
 }
 
 CoursesPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  courses: PropTypes.array.isRequired
+  courses: PropTypes.array.isRequired,
+  createCourse: PropTypes.func.isRequired
 };
 
 /**
@@ -69,12 +70,26 @@ function mapStateToProps(state, ownProps) {
 }
 
 /**
+ * (mapping manually)
+ * mapDispatchToProps determines what actions are available in the component. It takes one parameter, which is dispatch.
+ * This will get injected in by the Connect function.
+ * This function will also wrap our action creators in a call to dispatch. We wrap our actions in a call to dispatch, and
+ * that triggers our flow through Redux. With this mapping setup, we've declared that our component above will receive
+ * 'createCourse' as a prop (i.e this.props.createCourse).
+ */
+function mapDispatchToProps(dispatch) {
+  return {
+    createCourse: course => dispatch(courseActions.createCourse(course))
+  }
+}
+
+/**
  * Export a component that's decorated by the React-Redux Connect function. The Connect function is what we use to create
  * components that can interact with Redux.
  * Connect is a higher-order component that's going to wrap our CoursesPage. And Connect takes two parameters, the first
- * being mapStateToProps and the second being mapDispatchToProps. Each of these parameters is a function.
+ * being 'mapStateToProps' and the second being 'mapDispatchToProps'. Each of these parameters is a function.
  */
-export default connect(mapStateToProps)(CoursesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
 
 
 /**

@@ -6,6 +6,8 @@
  * When actions are dispatched, it ultimately affects what data is in the store.
  */
 
+import * as types from './actionTypes';
+
 export function createCourse(course) {
-  return {  type: 'CREATE_COURSE', course };
+  return {  type: types.CREATE_COURSE, course };
 }

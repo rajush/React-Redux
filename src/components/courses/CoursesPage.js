@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import * as courseActions from '../../actions/courseActions';
 
 class CoursesPage extends React.Component {
@@ -27,7 +28,7 @@ class CoursesPage extends React.Component {
 
   onClickSave() {
     //Just pass in the 'course' as it's already wrapped in dispatch for us down in the 'mapDispatchToProps' function.
-    this.props.createCourse(this.state.course);
+    this.props.actions.createCourse(this.state.course);
   }
 
   courseRow(course, index) {
@@ -56,7 +57,7 @@ class CoursesPage extends React.Component {
 
 CoursesPage.propTypes = {
   courses: PropTypes.array.isRequired,
-  createCourse: PropTypes.func.isRequired
+  actions: PropTypes.object.isRequired
 };
 
 /**
@@ -70,17 +71,16 @@ function mapStateToProps(state, ownProps) {
 }
 
 /**
- * (mapping manually)
  * mapDispatchToProps determines what actions are available in the component. It takes one parameter, which is dispatch.
  * This will get injected in by the Connect function.
- * This function will also wrap our action creators in a call to dispatch. We wrap our actions in a call to dispatch, and
- * that triggers our flow through Redux. With this mapping setup, we've declared that our component above will receive
- * 'createCourse' as a prop (i.e this.props.createCourse).
+ * Here, we call 'bindActionCreators' and pass it the 'courseActions' and the dispatch parameters. And what
+ * bindActionCreators will do is it will go through our 'courseActions' and find all the actions in that file and then
+ * wrap them in a call to dispatch.
  */
 function mapDispatchToProps(dispatch) {
   return {
-    createCourse: course => dispatch(courseActions.createCourse(course))
-  }
+    actions: bindActionCreators(courseActions, dispatch)
+  };
 }
 
 /**

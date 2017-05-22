@@ -4,6 +4,12 @@ import {bindActionCreators} from 'redux';
 import * as courseActions from '../../actions/courseActions';
 
 class CoursesPage extends React.Component {
+  /**
+   *  --------------
+   *  In the constructor, we initialize state and also call our bind functions. Any functions that need to be bound to
+   *  the 'this' context, this is the best place to do so.
+   *  --------------
+   */
   constructor(props, context) {
     super(props, context);
 
@@ -20,6 +26,12 @@ class CoursesPage extends React.Component {
     this.onClickSave = this.onClickSave.bind(this);
   }
 
+  /**
+   *  --------------
+   *  Child functions, which are called by render.
+   *  --------------
+   */
+
   onTitleChange(event) {
     const course = this.state.course;
     course.title = event.target.value;
@@ -34,6 +46,13 @@ class CoursesPage extends React.Component {
   courseRow(course, index) {
     return <div key={index}>{course.title}</div>;
   }
+
+  /**
+   *  --------------
+   *  render function where we would typically just be calling a child component. Container components ideally just call
+   *  a child component that contains that markup.
+   *  --------------
+   */
 
   render () {
     return (
@@ -55,10 +74,24 @@ class CoursesPage extends React.Component {
   }
 }
 
+/**
+ *  --------------
+ *  propTypes that provide our prop type validation.
+ *  --------------
+ */
+
 CoursesPage.propTypes = {
   courses: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
 };
+
+/**
+ *  --------------
+ *  Redux Connect and related functions. Below, we have our call to Connect. We have our mapStateToProps function and
+ *  our mapDispatchToProps function.
+ *  --------------
+ */
+
 
 /**
  * When the course data changes that this 'mapStateToProps' function would receive that new state and end up passing that

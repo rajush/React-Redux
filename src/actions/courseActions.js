@@ -27,8 +27,8 @@ export function loadCourses() {
            * And we will pass it a list of courses.
            */
             dispatch(loadCoursesSuccess(courses));
-        }),catch(error => {
+        }).catch(error => {
             throw(error);
         });
-    }
+    };
 }

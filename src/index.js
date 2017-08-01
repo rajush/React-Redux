@@ -12,6 +12,7 @@ import configureStore from './store/configureStore';
 import {Provider} from 'react-redux';
 
 import routes from './routes';
+import {loadCourses} from './actions/courseActions';
 import './styles/styles.css'; //Webpack can import CSS files too! It will end up bundling these files.
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
@@ -20,8 +21,11 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
  * create an instance of our store. We are not passing any initial state here because
  * Currently, our reducer already sets its initial state using an ES6 default parameter.
  * (If we pass initial state here, we'd be overriding the default parameters that we specify in our reducers.)
+ *
+ * Once the store is configured, we can go ahead and dispatch actions against the store.
  */
 const store = configureStore();
+store.dispatch(loadCourses()); // dispatching loadCourses on load
 
 /**
  * Application's entry point. Here we pass in our routes component.

@@ -12,18 +12,6 @@ class CoursesPage extends React.Component {
    */
   constructor(props, context) {
     super(props, context);
-
-    this.state = {
-      course: { title: "" }
-    };
-
-    /**
-     * React doesn't autobind in ES6 classes, so we have to handle binding ourselves.It needs to be bound to the
-     * instance of our component. So to fix this, let's bind the 'this' context in our constructor. All we are doing
-     * here is binding them to the 'this' of our CoursesPage component.
-     */
-    this.onTitleChange = this.onTitleChange.bind(this);
-    this.onClickSave = this.onClickSave.bind(this);
   }
 
   /**
@@ -31,17 +19,6 @@ class CoursesPage extends React.Component {
    *  Child functions, which are called by render.
    *  --------------
    */
-
-  onTitleChange(event) {
-    const course = this.state.course;
-    course.title = event.target.value;
-    this.setState({course: course});
-  }
-
-  onClickSave() {
-    //Just pass in the 'course' as it's already wrapped in dispatch for us down in the 'mapDispatchToProps' function.
-    this.props.actions.createCourse(this.state.course);
-  }
 
   courseRow(course, index) {
     return <div key={index}>{course.title}</div>;
@@ -59,16 +36,6 @@ class CoursesPage extends React.Component {
       <div>
         <h1>Courses</h1>
         {this.props.courses.map(this.courseRow)}
-        <h2>Add Course</h2>
-        <input
-          type="text"
-          onChange={this.onTitleChange}
-          value={this.state.course.title}/>
-
-        <input
-          type="submit"
-          value="Save"
-          onClick={this.onClickSave}/>
       </div>
     );
   }
@@ -138,4 +105,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
  * 'bind' statements for both of our functions--the onTitleChange function and the onClickSave function. All we are doing
  * here is binding them to the 'this' of our CoursesPage component.
  */
-

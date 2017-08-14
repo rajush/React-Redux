@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import TextInput from '../common/TextInput';
 import SelectInput from '../common/SelectInput';
 
-function CourseForm({course, authors, onSave, onChange, saving, errors}) {
+function CourseForm({course, allAuthors, onSave, onChange, saving, errors}) {
   return (
     <form>
       <h1>Manage Course</h1>
@@ -18,12 +18,7 @@ function CourseForm({course, authors, onSave, onChange, saving, errors}) {
         label="Author"
         value={course.authorId}
         defaultOption="Select Author"
-        options={authors.map( author => {
-          return {
-            value: author.id,
-            text: author.firstName + ' ' + author.lastName
-          };
-        })}
+        options={allAuthors}
         onChange={onChange}
         error={errors.authorId}/>
 
@@ -53,7 +48,7 @@ function CourseForm({course, authors, onSave, onChange, saving, errors}) {
 
 CourseForm.propTypes = {
   course: PropTypes.object.isRequired,
-  authors: PropTypes.array.isRequired,
+  allAuthors: PropTypes.array.isRequired,
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   saving: PropTypes.bool,

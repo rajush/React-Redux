@@ -77,8 +77,35 @@ ManageCoursePage.contextTypes = {
   router: PropTypes.object
 };
 
+function getCourseById(courses, id) {
+  const course = courses.filter(course => course.id == id);
+  if (course.length) return course[0]; // since filter return an array, have to grab the first
+  return null;
+}
+
 function mapStateToProps(state, ownProps) {
+  /**
+   * We need to look at the URL to determine if the user is trying to add a new course or edit an existing course. To get parameters
+   * from the URL, there's a second parameter on mapStateToProps that will make this easy called ownProps. Again, it's called ownProps
+   * because it's a reference to our component's props. In other words, its own props. So in our case, it means we can access some
+   * routing-related props that are populated by React Router based on the route defined for this component. So let's read the course Id
+   * from the URL right here
+   */
+  // from the path '/course/:id' in routes.js as the placeholder used was Id. So by saying Id here, it meant that we would say Id here
+  // to reference that segment of the URL. And that's how we say that we are wanting to get that second piece of the URL because this
+  // was the placeholder that we chose.
+  const courseId = ownProps.params.id; //
+
   let course = {id: '', watchHref: '', title: '', authorid:'', length: '', category: ''};
+
+  /**
+   * We're still waiting for AJAX call to come back, but this is running immediately on page load. So we have to make sure that we don't
+   * try getting courses when no courses are available yet by checking state.courses.length is greater than 0. So what we're checking
+   * for is just to make sure that at least one course exists. And it will once our AJAX call is actually completed to get those courses. 
+   */
+  if (courseId && state.courses.length > 0) {
+    course = getCourseById(state.courses, courseId);
+  }
 
   /**
    * The SelectInput component is looking for an object that has a 'value' property and a 'text' property. But the data that's coming down

@@ -13,6 +13,14 @@ export function loadCoursesSuccess(courses) {
   return {  type: types.LOAD_COURSES_SUCCESS, courses };
 }
 
+export function createCourseSuccess(courses) {
+  return {  type: types.CREATE_COURSES_SUCCESS, courses };
+}
+
+export function updateCourseSuccess(courses) {
+  return {  type: types.UPDATE_COURSES_SUCCESS, courses };
+}
+
 /**
  * THUNK
  * A thunk always returns a function that accepts a dispatch -- 'return function(dispatch)'. So this wrapper function
@@ -27,6 +35,23 @@ export function loadCourses() {
            * And we will pass it a list of courses.
            */
             dispatch(loadCoursesSuccess(courses));
+        }).catch(error => {
+            throw(error);
+        });
+    };
+}
+
+export function saveCourse(course) {
+    /**
+     * There's an optional parameter called 'getState' we could use. This is useful for cases where we are wanting
+     * to access the Redux store and get particular pieces of state out of it right here without having to pass it
+     * in as a parameter. in larger applications, it can be useful to just access the Redux store directly to get
+     * pieces of state that we need to work within our thunk.
+     */
+    return function (dispatch, getState) {
+        return courseApi.saveCourse(course).then(savedCourse => {
+            course.id ? dispatch(updateCourseSuccess(savedCourse)):
+                        dispatch(createCourseSuccess(savedCourse));
         }).catch(error => {
             throw(error);
         });

@@ -21,6 +21,23 @@ class ManageCoursePage extends React.Component {
     this.saveCourse = this.saveCourse.bind(this);
   }
 
+  /**
+   * When the props change, we need to update our container component's state.
+   * This React lifecycle function is called anytime that props have changed, as well as anytime that React thinks
+   * that props might have changed. This function may run sometimes even when props haven't changed. That's because
+   * sometimes React can't tell for sure if props have changed, so it runs this function for safety.
+   */
+  componentWillReceiveProps(nextProps) {
+    //doing this check here to say, Has the course's Id changed? And if it hasn't changed, then don't run this part of
+    //the function because the whole goal here is to make sure that if we end up getting a new course on props, then
+    //that's when we need to update state.
+    if (this.props.course.id !== nextProps.course.id) {
+      console.log(nextProps.course);
+      //Necessary to pupulate form when existing course is loaded directly
+      this.setState({course: Object.assign({}, nextProps.course)});
+    }
+  }
+
   updateCourseState(event) {
     const field = event.target.name;
     let course = this.state.course;
@@ -101,7 +118,7 @@ function mapStateToProps(state, ownProps) {
   /**
    * We're still waiting for AJAX call to come back, but this is running immediately on page load. So we have to make sure that we don't
    * try getting courses when no courses are available yet by checking state.courses.length is greater than 0. So what we're checking
-   * for is just to make sure that at least one course exists. And it will once our AJAX call is actually completed to get those courses. 
+   * for is just to make sure that at least one course exists. And it will once our AJAX call is actually completed to get those courses.
    */
   if (courseId && state.courses.length > 0) {
     course = getCourseById(state.courses, courseId);

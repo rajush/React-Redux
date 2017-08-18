@@ -30,8 +30,12 @@ class ManageCoursePage extends React.Component {
 
   saveCourse(event) {
     event.preventDefault();
-    console.log('saveCourse', this.state.course);
     this.props.actions.saveCourse(this.state.course);
+    /**
+     * Call this.context.router, which will push a new item to the router on our context object.
+     * So this will change our URL to /courses.
+     */
+    this.context.router.push('/courses');
   }
 
   render() {
@@ -53,6 +57,24 @@ ManageCoursePage.propTypes = {
   course: PropTypes.object.isRequired,
   authors: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
+};
+
+/**
+ * Pull in the React Router contsxt so router is available on this.context.router.
+ * This time we're going to use 'React Router's context' to redirect. To set up React Router's context, we have to declare
+ * that we want it. And we can do that by declaring the 'contextTypes' that we'd like to import on our component. Since contextTypes
+ * is a static property, it has to be done after the class definition. So a logical place to make this happen is right down here by
+ * our PropTypes. So, again, we're referencing our class. But this time we're referencing the 'contextTypes' that we'd expect. And
+ * we're effectively saying that we want router to be one of the contextTypes that are required. And by doing this, this makes
+ * React Router's context available to us throughout this component.
+ *
+ * Context is basically a global variable that library authors use but that we as library consumers should avoid. Yes, global
+ * state is generally evil, but context is used by both React Router and Redux in some places to provide easy access to the data
+ * that we need without having to write boilerplate plumbing code. And that's exactly what we're avoiding here.
+ *
+ */
+ManageCoursePage.contextTypes = {
+  router: PropTypes.object
 };
 
 function mapStateToProps(state, ownProps) {

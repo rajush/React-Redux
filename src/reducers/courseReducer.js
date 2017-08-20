@@ -34,7 +34,7 @@ export default function courseReducer(state = initialState.courses, action) {
        * 'filter' function, which is part of ES6, to get a list of all the courses except for the course that's being updated.
        * We use the 'spread operator' on the front, and that is what creates a brand-new array out of the filtered results that
        * are returned from filter. And then we use 'Object.assign' to create a copy of the course passed in and include it in the
-       * array that we're ultimately returning. 
+       * array that we're ultimately returning.
        */
       return [
         ...state.filter(course => course.id !== action.course.id),
@@ -45,3 +45,9 @@ export default function courseReducer(state = initialState.courses, action) {
       return state;
   }
 }
+
+/**
+ * NOTE:
+ *
+ *  Everytime we create a new reducer, we need to add the reference to our rootReducer as well.
+ */

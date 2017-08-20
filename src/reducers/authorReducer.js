@@ -10,3 +10,9 @@ export default function authorReducer(state = initialState.authors, action) {
       return state;
   }
 }
+
+/**
+ * NOTE:
+ *
+ *  Everytime we create a new reducer, we need to add the reference to our rootReducer as well.
+ */

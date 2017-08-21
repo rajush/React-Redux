@@ -47,11 +47,19 @@ class ManageCoursePage extends React.Component {
 
   saveCourse(event) {
     event.preventDefault();
-    this.props.actions.saveCourse(this.state.course);
     /**
-     * Call this.context.router, which will push a new item to the router on our context object.
-     * So this will change our URL to /courses.
+     * Since thunks utilize promises, we can just use a .then to specify a function that we'd like to call
+     * when the promise resolves.
      */
+    this.props.actions.saveCourse(this.state.course)
+      .then(() => this.redirect());
+  }
+
+  redirect() {
+    /**
+    * Call this.context.router, which will push a new item to the router on our context object.
+    * So this will change our URL to /courses.
+    */
     this.context.router.push('/courses');
   }
 

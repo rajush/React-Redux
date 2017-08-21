@@ -8,6 +8,7 @@
 
 import * as types from './actionTypes';
 import courseApi from '../api/mockCourseApi';
+import {beginAjaxCall} from './ajaxStatusActions';
 
 export function loadCoursesSuccess(courses) {
   return {  type: types.LOAD_COURSES_SUCCESS, courses };
@@ -29,6 +30,7 @@ export function updateCourseSuccess(course) {
  */
 export function loadCourses() {
     return function(dispatch) {
+        dispatch(beginAjaxCall());
         return courseApi.getAllCourses().then(courses => {
           /**
            * We're ready to dispatch an action creator. So we dispatch something called 'loadCoursesSuccess'.
@@ -49,6 +51,7 @@ export function saveCourse(course) {
      * pieces of state that we need to work within our thunk.
      */
     return function (dispatch, getState) {
+        dispatch(beginAjaxCall());
         return courseApi.saveCourse(course).then(savedCourse => {
             course.id ? dispatch(updateCourseSuccess(savedCourse)):
                         dispatch(createCourseSuccess(savedCourse));

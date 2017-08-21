@@ -10,7 +10,8 @@ class ManageCoursePage extends React.Component {
 
     this.state = {
       course: Object.assign({}, props.course),
-      errors: {}
+      errors: {},
+      saving: false
     };
     /**
 ￼     + React doesn't autobind in ES6 classes, so we have to handle binding ourselves.It needs to be bound to the
@@ -47,6 +48,7 @@ class ManageCoursePage extends React.Component {
 
   saveCourse(event) {
     event.preventDefault();
+    this.setState({saving: true});
     /**
      * Since thunks utilize promises, we can just use a .then to specify a function that we'd like to call
      * when the promise resolves.
@@ -56,6 +58,7 @@ class ManageCoursePage extends React.Component {
   }
 
   redirect() {
+    this.setState({saving: false});
     /**
     * Call this.context.router, which will push a new item to the router on our context object.
     * So this will change our URL to /courses.
@@ -71,7 +74,8 @@ class ManageCoursePage extends React.Component {
           onChange={this.updateCourseState}
           onSave={this.saveCourse}
           course={this.state.course}
-          errors={this.state.errors}/>
+          errors={this.state.errors}
+          saving={this.state.saving}/>
       </div>
     );
   }

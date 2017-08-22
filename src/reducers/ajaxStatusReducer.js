@@ -24,8 +24,11 @@ export default function ajaxStatusReducer(state = initialState.ajaxCallsInProgre
      * All our thunks ultimately dispatch a success action when they complete. Hence, we can use the success suffix as a
      * signal that the action is completed. This will help us avoid manually dispatching a separate endAjaxCall action every
      * time an AJAX call is completed.
+     *  Anytime that we get an AJAX_CALL_ERROR or an actionTypeEndsInSuccess, we're going to reduce the number of AJAX calls
+     *  that are currently in progress because in either case, that AJAX call is now completed.
      */
-  } else if (actionTypeEndsInSuccess(action.type)) {
+ } else if (action.type === types.AJAX_CALL_ERROR ||
+    actionTypeEndsInSuccess(action.type)) {
     return state - 1;
   }
   return state;

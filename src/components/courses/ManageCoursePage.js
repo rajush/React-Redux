@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as courseActions from '../../actions/courseActions';
 import CourseForm from './CourseForm';
+import toastr from 'toastr';
 
 class ManageCoursePage extends React.Component {
   constructor(props, context) {
@@ -59,6 +60,7 @@ class ManageCoursePage extends React.Component {
 
   redirect() {
     this.setState({saving: false});
+    toastr.success('Course saved');
     /**
     * Call this.context.router, which will push a new item to the router on our context object.
     * So this will change our URL to /courses.
